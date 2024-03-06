@@ -38,7 +38,6 @@ const CreateCourse = () => {
       const res = await axios.post("/api/course", values);
       router.push(`teacher/courses/${res.data.id}`);
     } catch (error) {
-      // console.log("Something went wrong ");
       toast.error("Something went wrong ");
     }
   };
