@@ -35,8 +35,10 @@ const CreateCourse = () => {
   const router = useRouter();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const res = await axios.post("/api/course", values);
-      router.push(`teacher/courses/${res.data.id}`);
+      const res = await axios.post("/api/courses", values);
+      console.log(res.data);
+      router.push(`/teacher/courses/${res.data.id}`);
+      toast.success("Course created");
     } catch (error) {
       toast.error("Something went wrong ");
     }
