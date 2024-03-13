@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
+import TitleForm from "./_components/title-form";
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
   if (!userId) {
@@ -43,6 +44,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
             <h2 className="text-xl">Customize your Course</h2>
           </div>
         </div>
+        <TitleForm initialData={course} courseId={course.id} />
       </div>
     </div>
   );
