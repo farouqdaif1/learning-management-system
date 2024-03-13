@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
 import TitleForm from "./_components/title-form";
+import DescriptionForm from "./_components/descraption-form";
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
   if (!userId) {
@@ -45,6 +46,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           </div>
         </div>
         <TitleForm initialData={course} courseId={course.id} />
+        <DescriptionForm initialData={course} courseId={course.id} />
       </div>
     </div>
   );
