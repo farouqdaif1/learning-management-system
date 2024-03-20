@@ -1,3 +1,5 @@
+import { withUt } from "uploadthing/tw";
+
 import type { Config } from "tailwindcss"
 
 const config = {
@@ -7,7 +9,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {

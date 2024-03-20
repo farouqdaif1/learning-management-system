@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import toast from "react-hot-toast";
+import { Course } from "@prisma/client";
 
 const formSchema = z.object({
   description: z.string().min(1, {
@@ -26,9 +27,7 @@ const formSchema = z.object({
 });
 
 interface DescriptionFormProps {
-  initialData: {
-    description: string | null;
-  };
+  initialData: Course;
   courseId: string;
 }
 
@@ -40,7 +39,9 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData as { description?: string | undefined },
+    defaultValues: {
+      description: initialData?.description || "",
+    },
   });
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -52,12 +53,11 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
     } catch (error) {
       toast.error("Something  Went wrong");
     }
-    console.log(values);
   };
 
   return (
-    <div className="mt-6 border bg-slate-100  rounded-md p-4 ">
-      <div className=" font-medium flex items-center justify-between">
+    <div className="mt-6 border bg-slate-100 rounded-md p-4">
+      <div className="font-medium flex items-center justify-between">
         course description
         <Button onClick={toggle} variant="ghost">
           {isEditing ? (
