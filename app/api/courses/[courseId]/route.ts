@@ -18,7 +18,10 @@ export const PATCH = async (req: Request, { params }: { params: { courseId: stri
                 ...values
             }
         })
+        console.log(course)
+
         return NextResponse.json(course);
+
     } catch (error) {
         console.log("[CourseId]", error)
         return new NextResponse("Internal Error", { status: 500 })
