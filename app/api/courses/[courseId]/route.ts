@@ -18,7 +18,6 @@ export const PATCH = async (req: Request, { params }: { params: { courseId: stri
                 ...values
             }
         })
-        console.log(course)
 
         return NextResponse.json(course);
 

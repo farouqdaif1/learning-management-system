@@ -27,6 +27,8 @@ model Course {
   attachments Attachment[]
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
+  chapters    Chapter[]
+  purchases   Purchase[]
 
   @@index([categoryId])
 }
@@ -47,4 +49,63 @@ model Attachment {
   updatedAt DateTime @updatedAt
 
   @@index([courseId])
+}
+
+model Chapter {
+  id           String         @id @default(uuid())
+  title        String
+  description  String
+  courseId     String
+  videoUrl     String
+  posetion     Int
+  isPuplished  Boolean        @default(false)
+  isFree       Boolean        @default(false)
+  muxData      MuxData?
+  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress UserProgress[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  @@index([courseId])
+}
+
+model MuxData {
+  id         String  @id @default(uuid())
+  ChapterId  String  @unique
+  assetId    String
+  playbackId String?
+  Chapter    Chapter @relation(fields: [ChapterId], references: [id], onDelete: Cascade)
+}
+
+model UserProgress {
+  id        String @id @default(uuid())
+  userid    String
+  chapterId String
+
+  Chapter    Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCopleted Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([userid, chapterId])
+  @@index([chapterId])
+}
+
+model Purchase {
+  id        String   @id @default(uuid())
+  userId    String
+  courseId  String
+  coues     Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+}
+
+model PaymobCustomer {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  PaymobCustomerId String   @unique
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
