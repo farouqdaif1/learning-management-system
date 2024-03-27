@@ -54,11 +54,11 @@ model Attachment {
 model Chapter {
   id           String         @id @default(uuid())
   title        String
-  description  String
+  description  String?
   courseId     String
-  videoUrl     String
-  posetion     Int
-  isPuplished  Boolean        @default(false)
+  videoUrl     String?
+  position     Int
+  isPublished  Boolean        @default(false)
   isFree       Boolean        @default(false)
   muxData      MuxData?
   course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
