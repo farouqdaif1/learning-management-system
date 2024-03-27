@@ -68,8 +68,8 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
       setIsUpdating(false);
     }
   };
-  const onEdit = (id: string) => {
-    router.push(`teacher/courses/${courseId}/chapters/${id}`);
+  const onEdit = (chapterId: string) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${chapterId}`);
   };
 
   return (
