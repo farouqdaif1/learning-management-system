@@ -11,6 +11,12 @@ async function main() {
                 { name: "الفرقة الرابعه" },
             ]
         });
+        await database.season.createMany({
+            data: [
+                { name: "الترم الاول" },
+                { name: "الترم الثاني" },
+            ]
+        });
         console.log("seeded data base categories");
     } catch (error) {
         console.log("error seeding data base categories", error);

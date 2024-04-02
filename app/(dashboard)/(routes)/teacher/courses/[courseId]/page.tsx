@@ -17,6 +17,7 @@ import { AttachmentForm } from "./_components/attachment-form";
 import ChapterForm from "./_components/chapter-form";
 import Banner from "@/components/banner";
 import Actions from "./_components/actions";
+import SeasonForm from "./_components/season-form";
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
   if (!userId) {
@@ -45,6 +46,11 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       name: "asc",
     },
   });
+  const seasons = await db.season.findMany({
+    orderBy: {
+      name: "asc",
+    },
+  });
   if (!course) {
     return redirect("/");
   }
@@ -54,6 +60,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     course.imageUrl,
     course.price,
     course.categoryId,
+    course.seasonId,
     course.chapters.some((chapter) => chapter.isPublished),
   ];
   const totalFields = requiredFields.length;
@@ -97,6 +104,14 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
               options={categories.map((category) => ({
                 label: category.name,
                 value: category.id,
+              }))}
+            />
+            <SeasonForm
+              initialData={course}
+              courseId={course.id}
+              options={seasons.map((season) => ({
+                label: season.name,
+                value: season.id,
               }))}
             />
           </div>

@@ -29,8 +29,17 @@ model Course {
   updatedAt   DateTime     @updatedAt
   chapters    Chapter[]
   purchases   Purchase[]
+  Season      Season?      @relation(fields: [seasonId], references: [id])
+  seasonId    String?
 
   @@index([categoryId])
+  @@index([seasonId])
+}
+
+model Season {
+  id     String   @id @default(uuid())
+  name   String
+  course Course[]
 }
 
 model Category {
