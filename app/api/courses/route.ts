@@ -14,7 +14,6 @@ export const POST = async (req: Request) => {
                 title,
             }
         });
-        console.log(course)
 
         return NextResponse.json(course, { status: 201 });
 
