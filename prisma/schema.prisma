@@ -5,7 +5,8 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 datasource db {
@@ -29,11 +30,12 @@ model Course {
   updatedAt   DateTime     @updatedAt
   chapters    Chapter[]
   purchases   Purchase[]
-  Season      Season?      @relation(fields: [seasonId], references: [id])
+  season      Season?      @relation(fields: [seasonId], references: [id])
   seasonId    String?
 
   @@index([categoryId])
   @@index([seasonId])
+  @@fulltext([title])
 }
 
 model Season {
@@ -88,15 +90,15 @@ model MuxData {
 
 model UserProgress {
   id        String @id @default(uuid())
-  userid    String
+  userId    String
   chapterId String
 
-  Chapter    Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  isCopleted Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  Chapter     Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  isCompleted Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  @@unique([userid, chapterId])
+  @@unique([userId, chapterId])
   @@index([chapterId])
 }
 
