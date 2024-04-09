@@ -41,8 +41,9 @@ const Actions = ({ isPublished, disabled, courseId }: ActionsProps) => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/courses/${courseId}`);
-      router.refresh();
       router.push("/teacher/courses");
+      router.refresh();
+
       toast.success("Course deleted successfully");
     } catch (error) {
       toast.error("Failed to delete course");
