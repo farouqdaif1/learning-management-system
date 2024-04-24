@@ -3,7 +3,8 @@
 
 export const clientSecret = async () => {
     let myHeaders = new Headers();
-    myHeaders.append("Authorization", "Token egy_sk_test_ff08efb05dbf7a4e6f9ac78fa60ef3ef6180133fc3b389956f8676a555e4a997");
+    const paymobApiKey = process.env.PAYMOB_API_KEY || ""; // Ensure PAYMOB_API_KEY is defined
+    myHeaders.append("Authorization", paymobApiKey);
     myHeaders.append("Content-Type", "application/json");
     let raw = JSON.stringify({
         "amount": 10,
