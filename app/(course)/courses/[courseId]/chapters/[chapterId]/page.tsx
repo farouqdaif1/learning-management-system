@@ -8,6 +8,7 @@ import Preview from "@/components/preview";
 import VideoPlayer from "./_components/video-player";
 import CourseEnrollButton from "./_components/course-enroll-button";
 import { File } from "lucide-react";
+import CourseProgressButton from "./_components/course-progress-button";
 const Chapter = async ({
   params,
 }: {
@@ -64,7 +65,12 @@ const Chapter = async ({
               {chapter.title}
             </h2>
             {purchase ? (
-              <div>Add course progress button</div>
+              <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+              />
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}
