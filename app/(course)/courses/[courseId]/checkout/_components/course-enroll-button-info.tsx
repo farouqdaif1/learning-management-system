@@ -10,7 +10,10 @@ interface CourseEnrollButtonProps {
   courseId: string;
 }
 
-const CourseEnrollButton = ({ price, courseId }: CourseEnrollButtonProps) => {
+const CourseEnrollButtonInfo = ({
+  price,
+  courseId,
+}: CourseEnrollButtonProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const router = useRouter();
   const onEnroll = async () => {
@@ -34,4 +37,4 @@ const CourseEnrollButton = ({ price, courseId }: CourseEnrollButtonProps) => {
   );
 };
 
-export default CourseEnrollButton;
+export default CourseEnrollButtonInfo;
