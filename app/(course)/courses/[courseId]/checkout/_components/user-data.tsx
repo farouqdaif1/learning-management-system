@@ -14,8 +14,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import CourseCardInfo from "./course-card-info";
-import CourseEnrollButton from "./course-enroll-button-info";
-import CourseEnrollButtonInfo from "./course-enroll-button-info";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { formatPrice } from "@/lib/format";
 interface UserDataFormProps {
   id: string;
   title: string;
@@ -39,6 +43,7 @@ const formSchema = z.object({
     message: "Please enter a valid phone number.",
   }),
 });
+
 const UserDataForm = ({
   id,
   title,
@@ -48,9 +53,6 @@ const UserDataForm = ({
   category,
   season,
 }: UserDataFormProps) => {
-  const onSubmit = () => {
-    console.log("submitted");
-  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -60,8 +62,39 @@ const UserDataForm = ({
       email: "",
     },
   });
+  const router = useRouter();
+
+  const { isSubmitting, isValid } = form.formState;
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log("ssssss", values);
+    try {
+      setIsLoaded(true);
+      const { data } = await axios.post(`/api/courses/${id}/checkout`, values);
+      // console.log("Front end", userData);
+      router.push(`${data}`);
+      console.log("Front end", data);
+    } catch (error) {
+      toast.error("Payment failed. Please try again.");
+    } finally {
+      setIsLoaded(false);
+    }
+  };
+  const [isLoaded, setIsLoaded] = useState(false);
+
   return (
     <div className="p-6 grid md:grid-cols-2 grid-cols-1">
+      <div className="p-6">
+        <CourseCardInfo
+          id={id}
+          title={title}
+          imageUrl={imageUrl!}
+          price={price!}
+          category={category!}
+          season={season!}
+          chapterLength={chapterLength!}
+          progress={null}
+        />
+      </div>
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -117,23 +150,17 @@ const UserDataForm = ({
                 </FormItem>
               )}
             />
+            <div className="w-full flex flex-row items-center justify-end mr-3">
+              <Button
+                className="w-full md:w-auto"
+                disabled={isLoaded || !isValid || isSubmitting}
+                type="submit"
+              >
+                Enroll for {formatPrice(price)}
+              </Button>
+            </div>
           </form>
         </Form>
-      </div>
-      <div className="p-6">
-        <CourseCardInfo
-          id={id}
-          title={title}
-          imageUrl={imageUrl!}
-          price={price!}
-          category={category!}
-          season={season!}
-          chapterLength={chapterLength!}
-          progress={null}
-        />
-      </div>
-      <div className="w-full flex flex-row items-center justify-end mr-3">
-        <CourseEnrollButtonInfo courseId={id} price={price} />
       </div>
     </div>
   );
