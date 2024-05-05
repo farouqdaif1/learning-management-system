@@ -1,4 +1,3 @@
-import Logo from "@/app/(dashboard)/_components/logo";
 import { Button } from "@/components/ui/button";
 import { UserButton, auth } from "@clerk/nextjs";
 import Image from "next/image";
@@ -16,7 +15,7 @@ const NavBarHome = () => {
             </Button>
           </Link>
         ) : (
-          <UserButton afterSignOutUrl="/home" />
+          <UserButton afterSignOutUrl="/" />
         )}
         <div className="w-auto md:w-[40%] flex justify-between items-center">
           <div className="w-auto md:w-[40%] flex justify-between items-center">

@@ -1,36 +1,21 @@
-import { getDashboardCourses } from "@/actions/get-dashboard-courses";
-import CoursesList from "@/components/courses-list";
-import { auth } from "@clerk/nextjs";
-import { CheckCircle, Clock } from "lucide-react";
-import { redirect } from "next/navigation";
-import InfoCard from "./_components/info-card";
+import ContactUs from "./_components/contact-us";
+import Footer from "./_components/Footer";
+import BannerHome from "./_components/banner-home";
+import NavBarHome from "./_components/navbar-home";
+import Slider from "./_components/slider";
+import ExploreOurCourses from "./_components/explor-our-courses";
 
-const Dashboard = async () => {
-  const { userId } = auth();
-  if (!userId) {
-    return redirect("/home");
-  }
-  const { completedCourses, courseInprogress } = await getDashboardCourses(
-    userId
-  );
+const Home = () => {
   return (
-    <div className="p-6 space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <InfoCard
-          icon={Clock}
-          label="In Progress"
-          numberOfItems={courseInprogress.length}
-        />
-        <InfoCard
-          icon={CheckCircle}
-          label="Completed"
-          numberOfItems={completedCourses.length}
-          variant="success"
-        />
-      </div>
-      <CoursesList items={[...courseInprogress, ...completedCourses]} />
+    <div>
+      <NavBarHome />
+      <Slider />
+      <ExploreOurCourses />
+      <BannerHome />
+      <ContactUs />
+      <Footer />
     </div>
   );
 };
 
-export default Dashboard;
+export default Home;
