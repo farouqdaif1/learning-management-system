@@ -34,7 +34,7 @@ const NavbarRoutes = () => {
             </Button>
           </Link>
         )}
-        <UserButton afterSignOutUrl="/" />
+        <UserButton afterSignOutUrl="/home" />
       </div>
     </>
   );

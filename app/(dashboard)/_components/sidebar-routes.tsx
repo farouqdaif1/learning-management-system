@@ -10,7 +10,7 @@ const guestRoutes = [
   },
   {
     icon: Compass,
-    label: "Browse",
+    label: "مسارات التعلم",
     href: "/search",
   },
 ];
