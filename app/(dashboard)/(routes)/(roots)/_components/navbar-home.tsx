@@ -10,7 +10,7 @@ const NavBarHome = () => {
       <div className="w-[95%] flex justify-between items-center">
         {!userId ? (
           <Link href="/sign-in">
-            <Button className="bg-gold-foreground hover:bg-gold text text-black">
+            <Button className="bg-gold-foreground font-medium text-lg hover:bg-gold text text-black">
               تسجيل الدخول
             </Button>
           </Link>
@@ -21,13 +21,13 @@ const NavBarHome = () => {
           <div className="w-auto md:w-[40%] flex justify-between items-center">
             <Link
               href="#contact-us"
-              className="font-medium text-slate-500 hover:text-gold-foreground"
+              className="font-medium text-lg text-slate-500 hover:text-gold-foreground"
             >
               تواصل معانا
             </Link>
             <Link
               href="/search"
-              className="font-medium text-slate-500  hover:text-gold-foreground"
+              className="font-medium text-lg text-slate-500  hover:text-gold-foreground"
             >
               مسارات التعلم
             </Link>
