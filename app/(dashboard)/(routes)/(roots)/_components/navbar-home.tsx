@@ -33,7 +33,7 @@ const NavBarHome = () => {
             </Link>
           </div>
           <div className="w-auto flex justify-between items-center">
-            <Image height={200} width={200} alt="logo" src="/logo.webp" />;
+            <Image height={200} width={200} alt="logo" src="/logo.webp" />
           </div>
         </div>
       </div>
