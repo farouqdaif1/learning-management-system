@@ -39,6 +39,7 @@ const ChapterIdPage = async ({
   const completionText = `(${completedFields}/${totalFields})`;
 
   const isComplete = requiredFields.every(Boolean);
+
   return (
     <>
       {!chapter.isPublished && (

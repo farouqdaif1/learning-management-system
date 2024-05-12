@@ -1,22 +1,17 @@
-import { Vimeo } from "vimeo";
 import Mux from "@mux/mux-node";
 
 import { auth } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
 
 import { db } from "@/lib/db";
-import axios from "axios";
+
 
 const { video } = new Mux({
     tokenId: process.env.MUX_TOKEN_ID,
     tokenSecret: process.env.MUX_TOKEN_SECRET
 })
 
-const client = new Vimeo(`${process.env.CLIENT_ID}`, `${process.env.CLIENT_SECRET}`, `${process.env.ACCESS_TOKENS}`);
-
-
-
-export const POST = async (req: Request, { params }: { params: { courseId: string, chapterId: string } }) => {
+export const GET = async (req: Request, { params }: { params: { courseId: string, chapterId: string } }) => {
     try {
         const { userId } = auth();
         if (!userId) {
@@ -31,28 +26,21 @@ export const POST = async (req: Request, { params }: { params: { courseId: strin
         if (!courseOwner) {
             return new NextResponse("unauthorized user", { status: 401 });
         }
-        const fileSizeInBytes = await req.json()
-        if (!fileSizeInBytes) {
-            return new NextResponse("File not provided", { status: 400 })
-        }
-        const headers = {
-            Authorization: `bearer ${process.env.ACCESS_TOKENS}`,
-            "Content-Type": "application/json",
-            Accept: "application/vnd.vimeo.*+json;version=3.4",
-        };
-        const postData = {
-            upload: {
-                approach: "tus",
-                size: `${fileSizeInBytes}`,
-            },
-        };
-        const { data } = await axios.post(`${process.env.VIMEO_URL}`, postData, { headers })
-        return NextResponse.json(data)
+        const url = await video.uploads.create({
+            cors_origin: 'https://your-browser-app.com',
+            new_asset_settings: {
+                passthrough: params.chapterId,
+                playback_policy: ['public'],
+                encoding_tier: 'baseline'
+            }
+        });
+        return NextResponse.json({ url: url.url })
     } catch (error) {
-        console.log("[CHAPTER_POST]", error)
+        console.log("[CHAPTER_GET]", error)
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+
 export const PATCH = async (req: Request, { params }: { params: { courseId: string, chapterId: string } }) => {
     try {
         const { userId } = auth();
@@ -179,3 +167,4 @@ export const DELETE = async (req: Request, { params }: { params: { courseId: str
         return new NextResponse("Internal Error", { status: 500 })
     }
 }
+

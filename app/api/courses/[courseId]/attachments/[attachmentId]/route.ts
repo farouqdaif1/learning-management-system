@@ -23,6 +23,7 @@ export const DELETE = async (req: Request, {
                 id: params.attachmentId
             }
         });
+
         return NextResponse.json(attachment);
     } catch (error) {
         console.log("[CourseId_Attachments]", error)

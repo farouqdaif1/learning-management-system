@@ -1,4 +1,5 @@
 "use client";
+import * as UpChunk from "@mux/upchunk";
 
 import * as z from "zod";
 import axios from "axios";
@@ -10,7 +11,6 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Chapter, MuxData } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import FileUpload from "@/components/file-upload";
 import { Input } from "@/components/ui/input";
 
 interface ChapterVideoFormProps {
@@ -33,7 +33,6 @@ export const ChapterVideoForm = ({
   const toggleEdit = () => setIsEditing((current) => !current);
 
   const router = useRouter();
-
   const onUpload = async () => {
     try {
       setLoading(true);
@@ -44,52 +43,24 @@ export const ChapterVideoForm = ({
       if (!fileInput.files || !fileInput.files[0]) {
         throw new Error("لم يتم اختيار ملف الفيديو");
       }
-
-      const fileSizeInBytes = fileInput.files[0].size;
-      const { data } = await axios.post(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        fileSizeInBytes
+      const data = await axios.get(
+        `/api/courses/${courseId}/chapters/${chapterId}`
       );
 
-      await axios.patch(data.upload.upload_link, fileInput.files[0], {
-        headers: {
-          "Tus-Resumable": "1.0.0",
-          "Upload-Offset": "0",
-          "Content-Type": "application/offset+octet-stream",
-        },
+      const getUploadUrl = data.data.url;
+      const upload = UpChunk.createUpload({
+        endpoint: getUploadUrl,
+        file: fileInput.files[0],
+        chunkSize: 5120, // Uploads the file in ~5mb chunks
       });
-
-      const videoStatus = await axios
-        .head(data.upload.upload_link, {
-          headers: {
-            "Tus-Resumable": "1.0.0",
-            Accept: "application/vnd.vimeo.*+json;version=3.4",
-          },
-        })
-        .then((response) => {
-          return {
-            fileLength: response.headers["upload-length"],
-            uploadOffset: response.headers["upload-offset"],
-          };
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-
-      if (videoStatus && videoStatus.fileLength === videoStatus.uploadOffset) {
-        toast.success("تم رفع الفيديو بنجاح");
-        toggleEdit();
-        router.refresh();
-      }
-      if (videoStatus && videoStatus.fileLength > videoStatus.uploadOffset) {
-        throw new Error("الفيديو لم يكتمل رفعه بعد");
-      }
-      if (videoStatus && videoStatus.fileLength < videoStatus.uploadOffset) {
-        throw new Error("حدث خطاء اثناء رفع الفيديو الرجاء المحاولة مرة اخرى");
-      }
+      toggleEdit();
     } catch (error) {
       toast.error((error as Error).message);
     } finally {
+      setTimeout(() => {
+        setLoading(true);
+        router.refresh();
+      }, 5000);
       setLoading(false);
     }
   };
