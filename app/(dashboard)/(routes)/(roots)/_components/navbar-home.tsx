@@ -18,10 +18,10 @@ const NavBarHome = () => {
           <UserButton afterSignOutUrl="/" />
         )}
         <div className="w-auto md:w-[40%] flex justify-between items-center">
-          <div className="w-auto md:w-[40%] flex justify-between items-center">
+          <div className="w-auto md:w-[50%] flex justify-between items-center">
             <Link
               href="#contact-us"
-              className="font-medium text-lg text-slate-500 hover:text-gold-foreground"
+              className="hidden md:flex font-medium text-lg text-slate-500 hover:text-gold-foreground"
             >
               تواصل معانا
             </Link>

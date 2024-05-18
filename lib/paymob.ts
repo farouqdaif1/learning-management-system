@@ -27,7 +27,7 @@ export const clientSecret = async ({ userData, course }: CourseWithUserData) => 
             "items": [
                 {
                     "name": `${course.title}`,
-                    "amount": 1,
+                    "amount": 10,
                     "description": `${course.description}`,
                     "quantity": 1
                 }

@@ -66,13 +66,18 @@ const UserDataForm = ({
 
   const { isSubmitting, isValid } = form.formState;
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("ssssss", values);
     try {
       setIsLoaded(true);
-      const { data } = await axios.post(`/api/courses/${id}/checkout`, values);
-      // console.log("Front end", userData);
-      router.push(`${data}`);
-      console.log("Front end", data);
+      const paymentKey = await axios.post(
+        `/api/courses/${id}/checkout`,
+        values
+      );
+      // const { data } = await axios.post(`/api/courses/${id}/checkout`, values);
+      router.push(
+        `https://accept.paymob.com/api/acceptance/iframes/834821?payment_token=${paymentKey.data.token}`
+      );
+
+      // router.push(`${data}`);
     } catch (error) {
       toast.error("Payment failed. Please try again.");
     } finally {
