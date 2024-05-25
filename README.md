@@ -35,7 +35,7 @@ To get started with the development environment, follow these steps:
 
 1. **Clone the repository**:
     ```sh
-    git clone 
+    git clone https://github.com/farouqdaif1/learning-management-system.git
     cd lms
     ```
 
