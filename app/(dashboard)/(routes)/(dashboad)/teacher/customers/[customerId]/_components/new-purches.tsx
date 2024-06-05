@@ -19,6 +19,7 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { Combobox } from "@/components/ui/combobox";
 import { useEffect, useState } from "react";
+import { Course } from "@prisma/client";
 const formSchema = z.object({
   userEmail: z.string().min(1, {
     message: "Title is required",
@@ -31,8 +32,9 @@ const formSchema = z.object({
 interface NewPurchasesProps {
   name: string;
   email: string;
+  purchasedCourses: string[];
 }
-const NewPurchases = ({ name, email }: NewPurchasesProps) => {
+const NewPurchases = ({ name, email, purchasedCourses }: NewPurchasesProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -49,7 +51,6 @@ const NewPurchases = ({ name, email }: NewPurchasesProps) => {
       await axios.post("/api/customers", values);
       toast.success("تم بيع الكورس الي المشتري بنجاح");
       form.reset();
-
       router.refresh();
     } catch (error) {
       toast.error("حدث شئ خاطئ");
@@ -60,8 +61,10 @@ const NewPurchases = ({ name, email }: NewPurchasesProps) => {
       try {
         const res = await axios.get("/api/courses");
         const courses = res.data;
-
-        setCourses(courses);
+        const filteredCourses = courses.filter(
+          (course: Course) => !purchasedCourses.includes(course.id)
+        );
+        setCourses(filteredCourses);
       } catch (error) {
         console.log(error);
       }

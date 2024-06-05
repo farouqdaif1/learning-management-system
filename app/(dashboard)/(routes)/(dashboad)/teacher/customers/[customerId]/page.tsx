@@ -27,6 +27,8 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
       course: true,
     },
   });
+  const purchasedCourses = purchases.map((purchase) => purchase.courseId);
+  console.log(purchasedCourses);
 
   return (
     <div className="p-6">
@@ -56,7 +58,11 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
         <h1 className="text-center text-4xl font-bold text-gold">
           الاشتراك في مسار جديد
         </h1>
-        <NewPurchases name={customer.userName} email={customer.userEmail} />
+        <NewPurchases
+          name={customer.userName}
+          email={customer.userEmail}
+          purchasedCourses={purchasedCourses}
+        />
       </div>
       <div className="p-4">
         <h1 className="text-center text-4xl font-bold text-gold">
