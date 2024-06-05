@@ -28,7 +28,6 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
     },
   });
   const purchasedCourses = purchases.map((purchase) => purchase.courseId);
-  console.log(purchasedCourses);
 
   return (
     <div className="p-6">
@@ -68,11 +67,11 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
         <h1 className="text-center text-4xl font-bold text-gold">
           المسارات المشترك بها
         </h1>
-        <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div className="p-4 grid grid-cols-1 justify-center items-center md:grid-cols-2 gap-4 mb-4 r">
           {purchases.map((purchase) => (
             <CourseCardInfo
               key={purchase.course.id}
-              id={purchase.course.id}
+              id={purchase.id}
               title={purchase.course.title}
               imageUrl={purchase.course.imageUrl!}
               price={purchase.course.price!}
