@@ -6,46 +6,99 @@ import { db } from "@/lib/db";
 export const POST = async (req: Request) => {
     try {
         const { userId } = auth();
-        const { userEmail, name, courseId } = await req.json();
         if (!userId) {
             return new NextResponse("Unauthorized", { status: 401 });
         }
+        const { userEmail, name, courseId } = await req.json();
+
         const users = await clerkClient.users.getUserList({ emailAddress: userEmail });
 
         if (users.length === 0) {
-            return new NextResponse("User not found", { status: 404 });
+            throw new Error("User not found");
         }
-
         const { id } = users[0];
+        const courseOwner = await db.course.findUnique({
+            where: {
+                userId: userId,
+                id: courseId
+            }, select: {
+                price: true,
 
+            }
+        });
+        if (!courseOwner) {
+            throw new Error("Course not found");
+        }
         let user = await db.paymobCustomer.findUnique({
             where: {
                 userId: id,
-                userName: name,
                 userEmail: userEmail
             }, select: {
-                PaymobCustomerId: true
+                PaymobBuyerId: true
             }
         })
+
         if (!user) {
-            const newUser = await db.paymobCustomer.create({
+            await db.paymobCustomer.create({
                 data: {
                     userId: id,
-                    PaymobCustomerId: `${id}`,
+                    PaymobBuyerId: `${id}`,
                     userName: name,
-                    userEmail: userEmail
+                    userEmail: userEmail,
+                    totalCourses: 0,
+                    totalPurchases: 0,
                 }
             })
         }
-        await db.purchase.create({
+
+        const purchase = await db.purchase.create({
             data: {
-                courseId: "daa55d4f-b2e6-4dc8-b147-48d93382a52f",
+                courseId: courseId,
                 userId: id,
             }
         })
+        if (purchase) {
+            await db.paymobCustomer.update({
+                where: {
+                    userId: id
+                },
+                data: {
+                    totalCourses: {
+                        increment: 1
+                    },
+                    totalPurchases: {
+                        increment: courseOwner.price!
+                    },
+                    userName: name,
+                    userEmail: userEmail,
+                }
+            })
+
+        }
         return NextResponse.json("Customer Created", { status: 201 });
     } catch (error) {
         console.log("[Courses]", error);
         return new NextResponse("InternalError", { status: 500, });
     }
 };
+export const GET = async (req: Request) => {
+    try {
+        const { userId } = auth();
+        if (!userId) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+        const customers = await db.paymobCustomer.findMany({
+            select: {
+                id: true,
+                userName: true,
+                userEmail: true
+            }
+        });
+
+        return NextResponse.json(customers, { status: 200 });
+
+    } catch (error) {
+        console.log("[Customer For Buyera]", error);
+        return new NextResponse("InternalError", { status: 500, });
+    }
+}

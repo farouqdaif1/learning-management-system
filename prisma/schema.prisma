@@ -115,11 +115,13 @@ model Purchase {
 }
 
 model PaymobCustomer {
-  id               String   @id @default(uuid())
-  userId           String   @unique
-  userEmail        String   @unique
-  userName         String
-  PaymobCustomerId String   @unique
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  userEmail      String   @unique
+  userName       String
+  totalCourses   Int      @default(0)
+  totalPurchases Int      @default(0)
+  PaymobBuyerId  String   @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }

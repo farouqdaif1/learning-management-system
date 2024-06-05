@@ -28,13 +28,16 @@ const formSchema = z.object({
     message: "Name is required",
   }),
 });
-
-const CreateUser = () => {
+interface NewPurchasesProps {
+  name: string;
+  email: string;
+}
+const NewPurchases = ({ name, email }: NewPurchasesProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      userEmail: "",
-      name: "",
+      userEmail: email,
+      name: name,
       courseId: "",
     },
   });
@@ -45,7 +48,8 @@ const CreateUser = () => {
     try {
       await axios.post("/api/customers", values);
       toast.success("تم بيع الكورس الي المشتري بنجاح");
-      router.push("/teacher/customers");
+      form.reset();
+
       router.refresh();
     } catch (error) {
       toast.error("حدث شئ خاطئ");
@@ -75,26 +79,6 @@ const CreateUser = () => {
         >
           <FormField
             control={form.control}
-            name="userEmail"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel> البريد الالكتروني الخاص بالمشتري </FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    placeholder="example@gmail.com"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription>
-                  ادخل البريد الالكتروني للمستخدم الذي تريد انشاء حساب له
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="courseId"
             render={({ field }) => (
               <FormItem>
@@ -115,32 +99,9 @@ const CreateUser = () => {
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>الاسم الخاص بالمشتري </FormLabel>
-                <FormControl>
-                  <Input
-                    disabled={isSubmitting}
-                    placeholder="احمد فاروق علي"
-                    {...field}
-                  />
-                </FormControl>
-                <FormDescription> اسم المشرتي للمسار </FormDescription>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           <div className="flex items-center gap-x-2">
-            <Link href="/teacher/customers">
-              <Button type="button" variant="ghost">
-                الغاء
-              </Button>
-            </Link>
             <Button type="submit" disabled={!isValid || isSubmitting}>
-              انشاء
+              بيع الكورس
             </Button>
           </div>
         </form>
@@ -149,4 +110,4 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+export default NewPurchases;

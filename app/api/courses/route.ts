@@ -30,7 +30,8 @@ export const GET = async (req: Request) => {
         }
         const courses = await db.course.findMany({
             where: {
-                userId: userId
+                userId: userId,
+                isPublished: true
             }, select: {
                 id: true,
                 title: true

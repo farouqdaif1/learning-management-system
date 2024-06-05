@@ -7,8 +7,7 @@ import { db } from "@/lib/db";
 const Buyers = async () => {
   const { userId } = auth();
   if (!userId) return redirect("/");
-  const users = await db.paymobCustomer.findMany();
-
+  const users = await db.paymobCustomer.findMany({});
   return (
     <div className="p-6">
       <DataTable columns={columns} data={users} />
