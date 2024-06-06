@@ -10,7 +10,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -32,10 +32,10 @@ model Course {
   purchases   Purchase[]
   season      Season?      @relation(fields: [seasonId], references: [id])
   seasonId    String?
+  // @@fulltext([title])
 
   @@index([categoryId])
   @@index([seasonId])
-  @@fulltext([title])
 }
 
 model Season {
