@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import CourseCardInfo from "./_components/course-card-info";
 import DataCard from "./_components/data-card";
 import NewPurchases from "./_components/new-purches";
+import DeleteCustomer from "./_components/delete.-customers";
 
 const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
   const { userId } = auth();
@@ -31,6 +32,8 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
 
   return (
     <div className="p-6">
+      di
+      <DeleteCustomer customerId={params.customerId} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <DataCard
           label={"الاسم"}
@@ -75,6 +78,8 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
               title={purchase.course.title}
               imageUrl={purchase.course.imageUrl!}
               price={purchase.course.price!}
+              ownerId={purchase.course.userId}
+              currentUserId={userId}
             />
           ))}
         </div>

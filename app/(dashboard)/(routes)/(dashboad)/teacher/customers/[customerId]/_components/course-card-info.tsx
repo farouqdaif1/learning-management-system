@@ -11,12 +11,16 @@ interface CourseCardInfoProps {
   title: string;
   imageUrl: string;
   price: number;
+  ownerId: string;
+  currentUserId: string;
 }
 const CourseCardInfo = ({
   id,
   title,
   imageUrl,
   price,
+  ownerId,
+  currentUserId,
 }: CourseCardInfoProps) => {
   const router = useRouter();
   const handleDelete = async (id: string) => {
@@ -40,18 +44,20 @@ const CourseCardInfo = ({
         </p>
       </div>
       <div>
-        <button
-          className=" group-hover:bg-slate-100 group-hover:text-gold-foreground transition-all w-full mt-2 py-2 rounded-md text-sm font-medium text-white bg-gold-foreground text-center"
-          type="button"
-          onClick={() => {
-            handleDelete(id);
-          }}
-        >
-          <span className="flex flex-row  justify-center items-center">
-            <TrashIcon />
-            مسح من المشتريات
-          </span>
-        </button>
+        {currentUserId == ownerId && (
+          <button
+            className=" group-hover:bg-slate-100 group-hover:text-gold-foreground transition-all w-full mt-2 py-2 rounded-md text-sm font-medium text-white bg-gold-foreground text-center"
+            type="button"
+            onClick={() => {
+              handleDelete(id);
+            }}
+          >
+            <span className="flex flex-row  justify-center items-center">
+              <TrashIcon />
+              مسح من المشتريات
+            </span>
+          </button>
+        )}
       </div>
     </div>
   );
