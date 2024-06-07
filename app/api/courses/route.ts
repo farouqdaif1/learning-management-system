@@ -22,3 +22,26 @@ export const POST = async (req: Request) => {
         return new NextResponse("InternalError", { status: 500, });
     }
 }
+export const GET = async (req: Request) => {
+    try {
+        const { userId } = auth();
+        if (!userId) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+        const courses = await db.course.findMany({
+            where: {
+                userId: userId,
+                isPublished: true
+            }, select: {
+                id: true,
+                title: true
+            }
+        });
+
+        return NextResponse.json(courses, { status: 200 });
+
+    } catch (error) {
+        console.log("[Courses]", error);
+        return new NextResponse("InternalError", { status: 500, });
+    }
+}

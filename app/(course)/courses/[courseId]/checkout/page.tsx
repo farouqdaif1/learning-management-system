@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs";
 import UserDataForm from "./_components/user-data";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import CallUsForm from "./_components/call-us";
 
 const CheckOut = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
@@ -28,7 +29,7 @@ const CheckOut = async ({ params }: { params: { courseId: string } }) => {
 
   return (
     <div className="p-4">
-      <UserDataForm
+      <CallUsForm
         id={courseInfo.id}
         title={courseInfo.title}
         imageUrl={courseInfo.imageUrl!}

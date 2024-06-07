@@ -6,8 +6,9 @@ async function main() {
         await database.category.createMany({
             data: [
                 { name: "الفرقة الاولي" },
-                { name: "الفرقة الثانية" },
                 { name: "الفرقة الثالثة" },
+
+                { name: "الفرقة الثانية" },
                 { name: "الفرقة الرابعه" },
             ]
         });
