@@ -18,7 +18,6 @@ export const getDashboardCourses = async (userId: string): Promise<DashboardCour
             where: { userId: userId }, select: {
                 course: {
                     include: {
-                        season: true,
                         category: true,
                         chapters: {
                             where: {

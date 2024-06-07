@@ -1,11 +1,11 @@
 "use client";
 import { usePathname } from "next/navigation";
 import SidebarItem from "./sidebar-item";
-import { BarChart, Compass, Layout, List, ShoppingBag } from "lucide-react";
+import { BarChart, Compass, Layout, List } from "lucide-react";
 const guestRoutes = [
   {
     icon: Layout,
-    label: "لوحة التحكم ",
+    label: "Dashboard",
     href: "/dashboard",
   },
   {
@@ -17,18 +17,13 @@ const guestRoutes = [
 const teacherRoutes = [
   {
     icon: List,
-    label: "مسارات التعلم",
+    label: "Courses",
     href: "/teacher/courses",
   },
   {
     icon: BarChart,
-    label: "التحليلات",
+    label: "analytics",
     href: "/teacher/analytics",
-  },
-  {
-    icon: ShoppingBag,
-    label: "المشترين والمبيعات",
-    href: "/teacher/customers",
   },
 ];
 const SidebarRoutes = () => {
