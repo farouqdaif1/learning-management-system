@@ -9,8 +9,7 @@ const divStyle = {
   backgroundSize: "contain",
   backgroundRepeat: "no-repeat",
   backgroundPosition: "center ",
-  height: "100vh",
-  width: "100%",
+  height: "600px",
   borderRadius: "50px",
 };
 const divHome = {
@@ -18,11 +17,7 @@ const divHome = {
   alignItems: "center",
   justifyContent: "center",
   backgroundSize: "contain",
-  // backgroundRepeat: "no-repeat",
-  marginTop: "auto",
-  marginBottom: "auto",
   backgroundPosition: "center",
-  // height: "500px",
 };
 const slideImages = [
   {
@@ -41,10 +36,10 @@ const slideImages = [
 const Slider = () => {
   return (
     <div
-      className="w-full h-screen relative overflow-hidden m"
+      className="w-full h-screen relative overflow-hidden mb-4 mt-4"
       style={{ ...divHome, backgroundImage: "url('/pattern.webp')" }}
     >
-      <div className="slide-container  w-[90%] m-auto">
+      <div className="slide-container  w-[90%] m-auto ">
         <Slide>
           {slideImages.map((slideImage, index) => (
             <div key={index}>

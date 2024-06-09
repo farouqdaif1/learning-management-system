@@ -21,7 +21,11 @@ const config = {
     },
     extend: {
       colors: {
+        "gradient": "linear-gradient(to top, #be9146, #f2cb72);",
+        "gradient-2": "#f2cb72",
+        "gradient-3": "#be9146",
         "brown": "#1e191a",
+        "gray": "#6d6d6d",
         "gray-bg": "#eaeaea",
         'gold': '#efca71',
         "gold-foreground": "#C5984A",
@@ -77,6 +81,9 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      fontFamily: {
+        Almarai: ['Almarai', 'sans-serif'],
       },
     },
   },

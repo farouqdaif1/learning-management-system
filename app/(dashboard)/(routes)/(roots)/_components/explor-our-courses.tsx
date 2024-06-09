@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const ExploreOurCourses = () => {
   return (
-    <div className=" min:h-screen md:flex flex-col justify-center items-center bg-gray-bg space-y-5 pt-5 pb-5">
+    <div className="font-Almarai  min:h-screen md:flex flex-col justify-center items-center bg-gray-bg space-y-5 pt-5 pb-5">
       <div className="w-full ">
         <h2 className="w-full text-5xl  font-bold text-center  text-gold">
           دوراتـــــــــنـا
@@ -38,7 +38,7 @@ const ExploreOurCourses = () => {
       </div>
       <div className="w-full h-[10%] flex flex-col justify-center items-center mb-10 ">
         <Link href="/search">
-          <Button className="bg-gold-foreground  rounded-xl text-black hover:bg-gold text-xl font-medium text-center">
+          <Button className="bg-gradient-to-l from-gradient-2 to-gradient-3  rounded-xl text-black hover:bg-gold text-xl font-medium text-center">
             تصفح جميع الكورسات
           </Button>
         </Link>

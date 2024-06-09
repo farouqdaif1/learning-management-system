@@ -40,7 +40,10 @@ const ContactUs = () => {
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {};
   return (
-    <div id="contact-us" className="w-full min:h-screen bg-gray-bg ">
+    <div
+      id="contact-us"
+      className="w-full min:h-screen bg-gray-bg font-Almarai  "
+    >
       <div className=" h-[100%]  grid grid-cols-1 md:grid-cols-2">
         <div className="flex items-center justify-center mt-5 mb-5">
           <Form {...form}>
@@ -57,7 +60,7 @@ const ContactUs = () => {
                       الاسم
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="الاسم بالكامل" {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -69,14 +72,10 @@ const ContactUs = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="flex justify-end text-lg">
-                      الأيميل
+                      البريد الالكتروني
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="الايميل الخاص بك "
-                        {...field}
-                      />
+                      <Input type="email" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -91,11 +90,7 @@ const ContactUs = () => {
                       رقم الهاتف
                     </FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        placeholder="+2010123456"
-                        {...field}
-                      />
+                      <Input type="number" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -119,7 +114,7 @@ const ContactUs = () => {
 
               <div className="w-full flex flex-row items-center justify-start mr-3">
                 <Button
-                  className="w-full md:w-auto bg-gold-foreground font-medium text-white"
+                  className="w-full md:w-auto bg-gradient-to-l from-gradient-2 to-gradient-3 font-medium text-white"
                   type="submit"
                 >
                   تواصل الان
@@ -130,9 +125,12 @@ const ContactUs = () => {
         </div>
         <div
           className="flex justify-center items-center order-first md:order-last "
-          style={{ backgroundImage: "url('/vector.webp')" }}
+          style={{
+            backgroundImage: "url('/vector.webp')",
+            backgroundSize: "contain",
+          }}
         >
-          <p className="w-[100%] text-[6.5rem]  font-medium flex flex-col justify-end items-center">
+          <p className="w-[100%] text-[7.5rem] text-brown font-bold flex flex-col justify-end items-center">
             تواصل
             <br />
             <span className="text-gold ">معانـــا</span>
