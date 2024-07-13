@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className=" font-Almarai bg-brown w-[100%] h-[250px] flex flex-row  items-center justify-center ">
+    <footer className=" font-Almarai bg-brown w-[100%] h-[250px] flex flex-col  items-center justify-center ">
       <div className="w-[90%] h-[90%] flex flex-row  items-center justify-between ">
         <div className="hidden  md:flex flex-col justify-between items-end w-[35%]">
           <span className="mb-5 text-gold font-bold text-xl">
@@ -27,15 +27,19 @@ const Footer = () => {
           <span className="text-white font-medium  text-xl">تواصل معنا</span>
           <ul className="space-y-5">
             <li className=" flex text-white font-medium justify-between">
-              <p> 221b Bakerstreet, London, UK</p>
+              <p>
+                ش مصطفي اسماعيل ( مجمع الكليات ) برج
+                <br />
+                الصفوة الدور الثاني- الازاريطة - الاسكندرية
+              </p>
               <MapPin className="text-white" />
             </li>
             <li className=" flex text-white font-medium justify-between">
-              <p> +44 812 5893 22</p>
+              <p>+201272731495</p>
               <Phone className="text-white" />
             </li>
             <li className=" flex text-white font-medium justify-between">
-              <p> Contact@tanahairstudio.com</p>
+              <p> info@international-justice.com</p>
               <Mail className="text-white" />
               <p></p>
             </li>
@@ -47,6 +51,10 @@ const Footer = () => {
           </Link>
         </div>
       </div>
+      <p className="text-white font-medium  text-sm">
+        شركة العدل الدولية التي تم تأسيسها بسجل شركات المحاماه بالنقابه العامه
+        تحت رقم (١٨) وفقا لقرار وزير العدل رقم ٤٩٢٠
+      </p>
     </footer>
   );
 };
