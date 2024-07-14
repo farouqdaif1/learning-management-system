@@ -33,15 +33,43 @@ const slideImages = [
     caption: "Slide 3",
   },
 ];
+const slideImagesForMobile = [
+  {
+    url: "/slide-mob-1.webp",
+    caption: "Slide 2",
+  },
+  {
+    url: "/slide-mob-2.webp",
+    caption: "Slide 2",
+  },
+  {
+    url: "/slide-mob-3.webp",
+    caption: "Slide 3",
+  },
+];
 const Slider = () => {
   return (
     <div
-      className="w-full h-screen relative overflow-hidden mb-4 mt-4"
+      className="w-full h-auto relative overflow-hidden mb-4 mt-4"
       style={{ ...divHome, backgroundImage: "url('/pattern.webp')" }}
     >
-      <div className="slide-container  w-[90%] m-auto ">
+      <div className="hidden md:block lg:block slide-container  w-[90%] m-auto ">
         <Slide>
           {slideImages.map((slideImage, index) => (
+            <div key={index}>
+              <div
+                style={{
+                  ...divStyle,
+                  backgroundImage: `url(${slideImage.url})`,
+                }}
+              ></div>
+            </div>
+          ))}
+        </Slide>
+      </div>
+      <div className="sm:block md:hidden lg:hidden  slide-container  w-[90%] m-auto ">
+        <Slide>
+          {slideImagesForMobile.map((slideImage, index) => (
             <div key={index}>
               <div
                 style={{

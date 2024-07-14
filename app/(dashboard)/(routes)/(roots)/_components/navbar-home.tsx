@@ -25,7 +25,7 @@ const NavBarHome = () => {
         </Link>
         <Link
           href="/search"
-          className="font-bold text-lg text-gray hover:text-gold-foreground"
+          className="hidden md:flex font-bold text-lg text-gray hover:text-gold-foreground"
         >
           مسارات التعلم
         </Link>
