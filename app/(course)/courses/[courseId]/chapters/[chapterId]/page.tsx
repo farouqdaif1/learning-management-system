@@ -9,15 +9,19 @@ import VideoPlayer from "./_components/video-player";
 import CourseEnrollButton from "./_components/course-enroll-button";
 import { File } from "lucide-react";
 import CourseProgressButton from "./_components/course-progress-button";
+import { clerkClient } from "@clerk/nextjs/server";
+
 const Chapter = async ({
   params,
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
   const { userId } = auth();
+
   if (!userId) {
     return redirect("/");
   }
+  const users = await clerkClient.users.getUserList({ userId: [userId] });
   const {
     chapter,
     course,
@@ -48,7 +52,13 @@ const Chapter = async ({
         />
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
-        <div className="p-4">
+        <div className="p-4 relative ">
+          <div className="text-white absolute top-10 left-10 z-50">
+            <p>ُEmail :{users[0].emailAddresses[0].emailAddress}</p>
+            <p>
+              Name :{users[0].firstName} {users[0].lastName}
+            </p>
+          </div>
           <VideoPlayer
             chapterId={params.chapterId}
             title={chapter.title}

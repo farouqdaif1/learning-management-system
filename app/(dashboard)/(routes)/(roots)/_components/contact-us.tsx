@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
 import {
   Form,
@@ -14,6 +15,9 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+
 const formSchema = z.object({
   name: z.string().min(2, {
     message: "First name must be at least 2 characters.",
@@ -38,7 +42,19 @@ const ContactUs = () => {
       massage: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const router = useRouter();
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      console.log(values);
+
+      await axios.post("/api/contact", values);
+      toast.success("Email sent successfully!");
+      router.refresh();
+    } catch (error) {
+      toast.error("Error sending email.");
+    }
+  };
   return (
     <div
       id="contact-us"

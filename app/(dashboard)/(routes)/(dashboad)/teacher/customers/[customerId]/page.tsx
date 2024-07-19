@@ -32,7 +32,6 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
 
   return (
     <div className="p-6">
-      di
       <DeleteCustomer customerId={params.customerId} />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         <DataCard

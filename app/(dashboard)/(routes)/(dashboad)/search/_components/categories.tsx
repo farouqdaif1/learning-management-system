@@ -1,7 +1,14 @@
 "use client";
 import { Category } from "@prisma/client";
-import { BsFillPeopleFill } from "react-icons/bs";
+import {
+  BsPeople,
+  BsBook,
+  BsBookmarkCheck,
+  BsPalette,
+  BsGraphUp,
+} from "react-icons/bs";
 import { IconType } from "react-icons";
+
 import CategoryItem from "./category-item";
 
 interface CategoriesProps {
@@ -9,10 +16,14 @@ interface CategoriesProps {
 }
 const Categories = ({ items }: CategoriesProps) => {
   const iconMap: Record<Category["name"], IconType> = {
-    "الفرقة الاولي": BsFillPeopleFill,
-    "الفرقة الثانية": BsFillPeopleFill,
-    "الفرقة الثالثة": BsFillPeopleFill,
-    "الفرقة الرابعه": BsFillPeopleFill,
+    "الفرقة الاولي": BsPeople,
+    "الفرقة الثانية": BsPeople,
+    "الفرقة الثالثة": BsPeople,
+    "الفرقة الرابعه": BsPeople,
+    دورات: BsBook,
+    ندوات: BsBookmarkCheck,
+    اخري: BsPalette,
+    دبلومات: BsGraphUp,
   };
   return (
     <div className="flex items-center gap-x-2 overflow-x-auto  pb-2">

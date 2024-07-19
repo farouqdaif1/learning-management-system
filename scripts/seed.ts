@@ -6,16 +6,20 @@ async function main() {
         await database.category.createMany({
             data: [
                 { name: "الفرقة الاولي" },
-                { name: "الفرقة الثالثة" },
-
                 { name: "الفرقة الثانية" },
+                { name: "الفرقة الثالثة" },
                 { name: "الفرقة الرابعه" },
+                { name: "ندوات" },
+                { name: "دورات" },
+                { name: "دبلومات" },
+                { name: "اخري" },
             ]
         });
         await database.season.createMany({
             data: [
                 { name: "الترم الاول" },
                 { name: "الترم الثاني" },
+                { name: "عامة" },
             ]
         });
         console.log("seeded data base categories");
