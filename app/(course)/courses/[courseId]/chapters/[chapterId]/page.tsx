@@ -52,13 +52,7 @@ const Chapter = async ({
         />
       )}
       <div className="flex flex-col max-w-4xl mx-auto pb-20">
-        <div className="p-4 relative ">
-          <div className="text-white absolute top-10 left-10 z-50">
-            <p>ُEmail :{users[0].emailAddresses[0].emailAddress}</p>
-            <p>
-              Name :{users[0].firstName} {users[0].lastName}
-            </p>
-          </div>
+        <div className="p-4">
           <VideoPlayer
             chapterId={params.chapterId}
             title={chapter.title}
@@ -67,6 +61,8 @@ const Chapter = async ({
             playbackId={muxData?.playbackId!}
             isLocked={isLocked}
             completeOnEnd={completeOnEnd}
+            email={users[0].emailAddresses[0].emailAddress}
+            name={`${users[0].firstName} ${users[0].lastName}`}
           />
         </div>
         <div>
