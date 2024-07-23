@@ -35,7 +35,13 @@ export const GET = async (req: Request) => {
                 isPublished: true
             }, select: {
                 id: true,
-                title: true
+                title: true,
+                chapters: {
+                    select: {
+                        id: true,
+                        title: true
+                    }
+                }
             }
         });
 

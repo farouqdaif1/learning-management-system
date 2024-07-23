@@ -63,7 +63,6 @@ const VideoPlayer = ({
 
       if (mediaTheme && mediaTheme.shadowRoot) {
         const muxVideo = mediaTheme.querySelector("mux-video");
-        console.log(muxVideo);
 
         if (muxVideo) {
           const watermark = document.createElement("div");

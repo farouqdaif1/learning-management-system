@@ -15,6 +15,14 @@ export const getChapter = async ({ userId, courseId, chapterId }: GetChapterProp
                 },
             }
         })
+        const chapterPurchase = await db.purchaseChapters.findUnique({
+            where: {
+                userId_chapterId: {
+                    userId,
+                    chapterId,
+                },
+            }
+        })
         const course = await db.course.findUnique({
             where: {
                 id: courseId,
@@ -42,7 +50,7 @@ export const getChapter = async ({ userId, courseId, chapterId }: GetChapterProp
                 }
             });
         }
-        if (chapter.isFree || purchase) {
+        if (chapter.isFree || purchase || chapterPurchase) {
             muxData = await db.muxData.findUnique({
                 where: {
                     chapterId,
@@ -77,6 +85,7 @@ export const getChapter = async ({ userId, courseId, chapterId }: GetChapterProp
             nextChapter,
             userProgress,
             purchase,
+            chapterPurchase
         }
 
     } catch (error) {

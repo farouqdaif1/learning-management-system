@@ -30,6 +30,7 @@ const Chapter = async ({
     userProgress,
     purchase,
     muxData,
+    chapterPurchase,
   } = await getChapter({
     userId,
     courseId: params.courseId,
@@ -38,7 +39,7 @@ const Chapter = async ({
   if (!chapter || !course) {
     return redirect("/");
   }
-  const isLocked = !chapter.isFree && !purchase;
+  const isLocked = !chapter.isFree && !purchase && !chapterPurchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
   return (
     <div>

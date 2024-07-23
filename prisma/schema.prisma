@@ -63,19 +63,20 @@ model Attachment {
 }
 
 model Chapter {
-  id           String         @id @default(uuid())
-  title        String
-  description  String?
-  courseId     String
-  videoUrl     String?
-  position     Int
-  isPublished  Boolean        @default(false)
-  isFree       Boolean        @default(false)
-  muxData      MuxData?
-  course       Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  userProgress UserProgress[]
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
+  id               String             @id @default(uuid())
+  title            String
+  description      String?
+  courseId         String
+  videoUrl         String?
+  position         Int
+  isPublished      Boolean            @default(false)
+  isFree           Boolean            @default(false)
+  muxData          MuxData?
+  course           Course             @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  userProgress     UserProgress[]
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  purchasesChapter PurchaseChapters[]
 
   @@index([courseId])
 }
@@ -114,14 +115,37 @@ model Purchase {
   @@index([courseId])
 }
 
+model PurchaseChapters {
+  id        String   @id @default(uuid())
+  userId    String
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, chapterId])
+  @@index([chapterId])
+}
+
 model PaymobCustomer {
   id             String   @id @default(uuid())
   userId         String   @unique
   userEmail      String   @unique
   userName       String
-  totalCourses   Int      @default(0)
+  totalCourses   Int?     @default(0)
   totalPurchases Int      @default(0)
   PaymobBuyerId  String   @unique
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
+}
+
+model ChapterCustomer {
+  id            String   @id @default(uuid())
+  userId        String   @unique
+  userEmail     String   @unique
+  userName      String
+  totalChapters Int?     @default(0)
+  PaymobBuyerId String   @unique
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

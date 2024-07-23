@@ -5,7 +5,7 @@ import { BarChart, Compass, Layout, List, ShoppingBag } from "lucide-react";
 const guestRoutes = [
   {
     icon: Layout,
-    label: "لوحة التحكم ",
+    label: "مسارتي",
     href: "/dashboard",
   },
   {
@@ -27,8 +27,13 @@ const teacherRoutes = [
   },
   {
     icon: ShoppingBag,
-    label: "المشترين والمبيعات",
+    label: "مشتري الدورات",
     href: "/teacher/customers",
+  },
+  {
+    icon: ShoppingBag,
+    label: "مشتري المحاضرة",
+    href: "/teacher/customerChapter",
   },
 ];
 const SidebarRoutes = () => {
