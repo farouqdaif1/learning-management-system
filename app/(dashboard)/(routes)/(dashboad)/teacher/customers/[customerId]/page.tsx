@@ -46,7 +46,7 @@ const CustomerPage = async ({ params }: { params: { customerId: string } }) => {
         />
         <DataCard
           label={"مجموع الكورسات المشترك فيها "}
-          value={customer.totalCourses}
+          value={customer.totalCourses ?? 0}
           shouldFormat={false}
         />
         <DataCard
