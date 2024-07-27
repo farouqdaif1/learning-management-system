@@ -3,9 +3,9 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ToasterProvider } from "@/components/providers/toaster-provider";
 import "@uploadthing/react/styles.css";
-
 import "./globals.css";
 import { ConfettiProvider } from "@/components/providers/confetti-provider";
+import "@/lib/cronJob";
 
 const inter = Inter({ subsets: ["latin"] });
 

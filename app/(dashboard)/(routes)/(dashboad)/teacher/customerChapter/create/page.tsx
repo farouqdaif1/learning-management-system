@@ -29,6 +29,8 @@ const formSchema = z.object({
     message: "Name is required",
   }),
   chapterId: z.string().min(1),
+  watches: z.string().min(1),
+  seeTime: z.string().min(1),
 });
 
 const CreateUser = () => {
@@ -39,6 +41,8 @@ const CreateUser = () => {
       name: "",
       courseId: "",
       chapterId: "",
+      watches: "",
+      seeTime: "",
     },
   });
   const { isSubmitting, isValid } = form.formState;
@@ -49,10 +53,41 @@ const CreateUser = () => {
   const [chapters, setChapters] = useState<{ id: string; title: string }[]>([]);
 
   const selectedCourseId = form.watch("courseId");
-  console.log(selectedCourseId);
+  const watchTime = [
+    { "1": "1 مشاهدة" },
+    { "2": "2 مشاهدة" },
+    { "3": "3 مشاهدة" },
+    { "4": "4 مشاهدة" },
+    { "5": "5 مشاهدة" },
+    { "6": "6 مشاهدة" },
+    { "7": "7 مشاهدة" },
+    { "8": "8 مشاهدة" },
+    { "9": "9 مشاهدة" },
+    { "10": "10 مشاهدة" },
+    { "11": "11 مشاهدة" },
+    { "12": "12 مشاهدة" },
+  ];
+  const seeTime = [
+    { "1": "ساعه" },
+    { "2": "ساعتين" },
+    { "3": "3 ساعه" },
+    { "4": "4 ساعه" },
+    { "5": "5 ساعه" },
+    { "6": "6 ساعه" },
+    { "12": "نصف يوم " },
+    { "24": "يوم" },
+    { "48": " يومين " },
+    { "168": " اسبوع" },
+    { "720": "شهر " },
+  ];
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/chapterCustomer", values);
+      await axios.post("/api/chapterCustomer", {
+        ...values,
+        watches: parseInt(values.watches),
+        seeTime: parseInt(values.seeTime),
+      });
       toast.success("تم بيع المحاضرة الي المشتري بنجاح");
       router.push("/teacher/customerChapter");
       router.refresh();
@@ -66,7 +101,6 @@ const CreateUser = () => {
         const res = await axios.get("/api/courses");
         const courses = res.data;
         setCourses(courses);
-        console.log(courses);
       } catch (error) {
         console.log(error);
       }
@@ -161,7 +195,62 @@ const CreateUser = () => {
               )}
             />
           </div>
-
+          <div
+            className={cn(
+              !selectedCourseId &&
+                "bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none"
+            )}
+          >
+            <FormField
+              control={form.control}
+              name="watches"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel> عدد المشاهدات </FormLabel>
+                  <FormControl>
+                    <Combobox
+                      {...field}
+                      options={watchTime.map((watch) => ({
+                        label: Object.values(watch)[0],
+                        value: Object.keys(watch)[0],
+                      }))}
+                    />
+                  </FormControl>
+                  <FormDescription>عدد مراة مشاهدة المحاضرة</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          <div
+            className={cn(
+              !selectedCourseId &&
+                "bg-gray-100 text-gray-400 cursor-not-allowed pointer-events-none"
+            )}
+          >
+            <FormField
+              control={form.control}
+              name="seeTime"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel> الوقت المسموح به </FormLabel>
+                  <FormControl>
+                    <Combobox
+                      {...field}
+                      options={seeTime.map((see) => ({
+                        label: Object.values(see)[0],
+                        value: Object.keys(see)[0],
+                      }))}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    يمكنه مشاهدة في خلال عدد الساعات المحدد
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
           <FormField
             control={form.control}
             name="name"

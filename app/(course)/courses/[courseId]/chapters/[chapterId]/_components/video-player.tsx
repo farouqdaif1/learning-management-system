@@ -7,8 +7,7 @@ import { useRouter } from "next/navigation";
 import { Loader2, Lock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useConfettiStore } from "@/hooks/use-confetti-store";
-import Mux from "@mux/mux-node";
-import { set } from "zod";
+
 interface VideoPlayerProps {
   chapterId: string;
   title: string;
@@ -79,6 +78,18 @@ const VideoPlayer = ({
       }
     }
   };
+  const updateNumberOfViews = async () => {
+    try {
+      await axios.put("/api/chapterCustomer", {
+        chapterId: chapterId,
+        userEmail: email,
+      });
+      toast.success("Chapter Watched");
+      router.refresh();
+    } catch (error) {
+      toast.error("something went wrong");
+    }
+  };
   useEffect(() => {
     if (isReady) {
       addWaterMark();
@@ -105,7 +116,10 @@ const VideoPlayer = ({
             onCanPlay={() => {
               setIsReady(true);
             }}
-            onEnded={onEnd}
+            onEnded={() => {
+              updateNumberOfViews();
+              onEnd();
+            }}
             playbackId={playbackId}
           />
         </div>

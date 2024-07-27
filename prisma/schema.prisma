@@ -10,7 +10,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
+  provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -116,12 +116,15 @@ model Purchase {
 }
 
 model PurchaseChapters {
-  id        String   @id @default(uuid())
-  userId    String
-  chapterId String
-  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  userId      String
+  chapterId   String
+  chapter     Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  watchNumber Int      @default(0)
+  whatched    Int?     @default(0)
+  seeTime     DateTime
 
   @@unique([userId, chapterId])
   @@index([chapterId])
