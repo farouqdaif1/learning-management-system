@@ -41,6 +41,8 @@ const Chapter = async ({
   }
   const isLocked = !chapter.isFree && !purchase && !chapterPurchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+  const isCoursePurchased = !!purchase;
+  console.log(isCoursePurchased);
   return (
     <div>
       {userProgress?.isCompleted && (
@@ -64,6 +66,8 @@ const Chapter = async ({
             completeOnEnd={completeOnEnd}
             email={users[0].emailAddresses[0].emailAddress}
             name={`${users[0].firstName} ${users[0].lastName}`}
+            chapterIsFree={chapter.isFree}
+            isCoursePurchased={isCoursePurchased}
           />
         </div>
         <div>

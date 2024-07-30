@@ -14,7 +14,7 @@ export const POST = async (req: Request) => {
 
         const users = await clerkClient.users.getUserList({ emailAddress: userEmail });
         if (users.length === 0) {
-            throw new Error("User not found");
+            return new NextResponse("No user", { status: 401 });
         }
         const { id } = users[0];
         const courseOwner = await db.course.findUnique({
@@ -24,7 +24,7 @@ export const POST = async (req: Request) => {
             }
         });
         if (!courseOwner) {
-            throw new Error("user not found");
+            throw new NextResponse("user not found", { status: 401 });
         }
         let user = await db.chapterCustomer.findUnique({
             where: {
@@ -52,7 +52,7 @@ export const POST = async (req: Request) => {
                 chapterId: chapterId,
                 userId: id,
                 watchNumber: watches,
-                whatched: 0,
+                whatched: 1,
                 seeTime: expireDate,
             }
         })
@@ -102,7 +102,7 @@ export const PUT = async (req: Request) => {
             }
         });
         if (!purchase) {
-            throw new Error("Chapter not found");
+            return new NextResponse("No purchase", { status: 401 });
         }
         if (purchase) {
             await db.purchaseChapters.update({

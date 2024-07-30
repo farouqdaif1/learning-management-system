@@ -18,6 +18,8 @@ interface VideoPlayerProps {
   completeOnEnd: boolean;
   email: string;
   name: string;
+  chapterIsFree: boolean;
+  isCoursePurchased: boolean;
 }
 const VideoPlayer = ({
   chapterId,
@@ -29,6 +31,8 @@ const VideoPlayer = ({
   completeOnEnd,
   email,
   name,
+  chapterIsFree,
+  isCoursePurchased,
 }: VideoPlayerProps) => {
   const [isReady, setIsReady] = useState(false);
   const router = useRouter();
@@ -65,10 +69,13 @@ const VideoPlayer = ({
 
         if (muxVideo) {
           const watermark = document.createElement("div");
-          watermark.innerText = `Email: ${email} Name: ${name}`;
+          watermark.innerHTML = `<p>Email: ${email}</p>
+                                      </br>
+                                      <p>Name: ${name}</p>`;
+
           watermark.style.position = "absolute";
           watermark.style.top = "10%";
-          watermark.style.left = "10%";
+          watermark.style.left = "0%";
           watermark.style.color = "white";
           watermark.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
           watermark.style.padding = "15px";
@@ -117,7 +124,9 @@ const VideoPlayer = ({
               setIsReady(true);
             }}
             onEnded={() => {
-              updateNumberOfViews();
+              if (!chapterIsFree && !isCoursePurchased) {
+                updateNumberOfViews();
+              }
               onEnd();
             }}
             playbackId={playbackId}
