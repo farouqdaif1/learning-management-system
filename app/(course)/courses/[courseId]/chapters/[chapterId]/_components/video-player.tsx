@@ -130,6 +130,7 @@ const VideoPlayer = ({
               onEnd();
             }}
             playbackId={playbackId}
+            preferPlayback="native"
           />
         </div>
       )}
