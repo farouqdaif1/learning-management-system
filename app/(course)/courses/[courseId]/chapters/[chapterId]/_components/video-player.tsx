@@ -131,6 +131,7 @@ const VideoPlayer = ({
             }}
             playbackId={playbackId}
             preferPlayback="native"
+            autoPlay
           />
         </div>
       )}
