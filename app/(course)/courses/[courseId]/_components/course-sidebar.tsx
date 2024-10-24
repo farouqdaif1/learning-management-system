@@ -34,7 +34,7 @@ const CourseSidebar = async ({ course, progressCount }: CourseSidebarProps) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full overflow-y-auto">
         {course.chapters.map((chapter) => (
           <CourseSidebarItem
             key={chapter.id}
